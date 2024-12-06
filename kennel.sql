@@ -403,9 +403,9 @@ INSERT INTO dog (name, owner, vet, breed, birthday, exercise, e_contact, color, 
 ('Luna', 55, 'Dr. Brown', 'Doberman', '2018-11-30', 3, 15, 'Black', 6),
 ('Oliver', 56, 'Dr. Violet', 'Pomeranian', '2020-06-15', 4, 16, 'Cream', 3),
 ('Nala', 57, 'Dr. Indigo', 'Australian Shepherd', '2021-01-03', 5, 17, 'Blue Merle', 2),
-('Riley', 58, 'Dr. Orange', 'Weimaraner', '2019-07-21', 6, 18, 'Gray', 1),
-('Hazel', 59, 'Dr. Green', 'Akita', '2018-03-28', 1, 19, 'Red', 4),
-('Leo', 60, 'Dr. Blue', 'Chihuahua', '2020-10-13', 2, 20, 'Fawn', 5);
+('Riley', 58, 'Dr. Orange', 'Weimaraner', '2010-07-21', 6, 18, 'Gray', 1),
+('Hazel', 59, 'Dr. Green', 'Akita', '2011-03-28', 1, 19, 'Red', 4),
+('Leo', 60, 'Dr. Blue', 'Chihuahua', '2013-10-13', 2, 20, 'Fawn', 5);
 
 -- Insert into reservation
 INSERT INTO reservation (confirm_num, kennel, dog, owner, start, end) VALUES
