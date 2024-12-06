@@ -1,10 +1,10 @@
 /*======================================================================
  * 
  *  NAME: Alexa Williams
- *  ASSIGN:  HW-2, Question 1
+ *  ASSIGN:  Final Project
  *  COURSE:  CPSC 321, Fall 2024
- *  DESC: this creates four relations containing important information 
- *        for airline travel and populates the tables with examples
+ *  DESC: this creates tne relations needed for my dog kennel application
+ *          it also includes inserts of fake data to populate the tables
  * 
  *======================================================================*/
 
@@ -189,7 +189,27 @@ INSERT INTO customer (id, name, balance, card) VALUES
 (37, 'Evelyn Young', 240, '9012-3456-7890-1234'),
 (38, 'Benjamin Hill', 380, '0123-4567-8901-2345'),
 (39, 'Abigail Scott', 150, '1234-5678-9012-3456'),
-(40, 'Alexander Adams', 450, '2345-6789-0123-4567');
+(40, 'Alexander Adams', 450, '2345-6789-0123-4567'),
+(41, 'Henry Moore', 320, '8901-1234-5678-2345'),
+(42, 'Victoria Bennett', 410, '9012-2345-6789-3456'),
+(43, 'Owen Murphy', 200, '0123-3456-7890-4567'),
+(44, 'Natalie Howard', 350, '1234-4567-8901-5678'),
+(45, 'Eleanor Foster', 290, '2345-5678-9012-6789'),
+(46, 'Jack Gray', 400, '3456-6789-0123-7890'),
+(47, 'Harper Perry', 220, '4567-7890-1234-8901'),
+(48, 'Joseph Ward', 500, '5678-8901-2345-9012'),
+(49, 'Aria Cox', 270, '6789-9012-3456-0123'),
+(50, 'Daniel Richardson', 300, '7890-0123-4567-1234'),
+(51, 'Grace Price', 380, '8901-1234-5678-2345'),
+(52, 'Madison Bailey', 180, '9012-2345-6789-3456'),
+(53, 'Julian Cooper', 240, '0123-3456-7890-4567'),
+(54, 'Ellie Bell', 340, '1234-4567-8901-5678'),
+(55, 'Ryan Kelly', 310, '2345-5678-9012-6789'),
+(56, 'Lucy Jenkins', 150, '3456-6789-0123-7890'),
+(57, 'Hannah Long', 450, '4567-7890-1234-8901'),
+(58, 'Isaac Hayes', 200, '5678-8901-2345-9012'),
+(59, 'Lillian Russell', 370, '6789-9012-3456-0123'),
+(60, 'Evan Powell', 230, '7890-0123-4567-1234');
 
 -- Insert into veterinarian
 INSERT INTO veterinarian (name, phone) VALUES
@@ -249,7 +269,27 @@ INSERT INTO employee (id, first, last, start, card, company) VALUES
 (15, 'Carter', 'Reed', '2023-04-10', '2345-7890-4567-9012', 'Fur Friends Ltd.'),
 (16, 'Chloe', 'Perez', '2022-01-18', '3456-8901-5678-0123', 'Happy Tails Inc.'),
 (17, 'Sophia', 'Bennett', '2021-03-12', '4567-9012-6789-1234', 'Pawfect Fitness Co.'),
-(18, 'Jacob', 'Collins', '2023-09-05', '5678-0123-7890-2345', 'Fur Friends Ltd.');
+(18, 'Jacob', 'Collins', '2023-09-05', '5678-0123-7890-2345', 'Fur Friends Ltd.'),
+(21, 'Samuel', 'Watson', '2022-03-15', '3456-7890-2345-8901', 'Pawfect Fitness Co.'),
+(22, 'Amelia', 'Clark', '2023-07-12', '1234-5678-3456-6789', 'Fur Friends Ltd.'),
+(23, 'Ethan', 'Mitchell', '2021-10-08', '8901-2345-7890-3456', 'Happy Tails Inc.'),
+(24, 'Sophia', 'Morris', '2020-01-20', '6789-9012-1234-5678', 'Pawfect Fitness Co.'),
+(25, 'Benjamin', 'Lee', '2019-09-05', '5678-1234-8901-2345', 'Fur Friends Ltd.'),
+(26, 'Charlotte', 'Taylor', '2021-12-15', '9012-3456-7890-1234', 'Happy Tails Inc.'),
+(27, 'Alexander', 'Harris', '2022-05-23', '2345-6789-9012-3456', 'Pawfect Fitness Co.'),
+(28, 'Isabella', 'Carter', '2023-02-17', '4567-8901-1234-6789', 'Fur Friends Ltd.'),
+(29, 'Lucas', 'Hall', '2020-06-30', '7890-1234-5678-9012', 'Happy Tails Inc.'),
+(30, 'Mia', 'Adams', '2018-11-22', '1234-9012-3456-6789', 'Pawfect Fitness Co.'),
+(31, 'Logan', 'Nelson', '2019-03-14', '6789-3456-1234-7890', 'Fur Friends Ltd.'),
+(32, 'Avery', 'Baker', '2022-08-27', '5678-2345-6789-9012', 'Happy Tails Inc.'),
+(33, 'Liam', 'Campbell', '2021-04-10', '3456-5678-1234-8901', 'Pawfect Fitness Co.'),
+(34, 'Emily', 'Hill', '2020-12-18', '9012-6789-2345-3456', 'Fur Friends Ltd.'),
+(35, 'Noah', 'Evans', '2019-07-25', '7890-3456-5678-9012', 'Happy Tails Inc.'),
+(36, 'Ella', 'King', '2023-01-05', '2345-8901-6789-4567', 'Pawfect Fitness Co.'),
+(37, 'Aiden', 'Scott', '2022-04-20', '5678-9012-2345-7890', 'Fur Friends Ltd.'),
+(38, 'Aria', 'Phillips', '2021-09-15', '3456-7890-1234-9012', 'Happy Tails Inc.'),
+(39, 'Mason', 'Turner', '2023-05-10', '4567-2345-5678-3456', 'Pawfect Fitness Co.'),
+(40, 'Harper', 'Anderson', '2019-02-11', '8901-5678-6789-1234', 'Fur Friends Ltd.');
 
 -- Insert into working
 INSERT INTO working (employee, company) VALUES
@@ -271,7 +311,27 @@ INSERT INTO working (employee, company) VALUES
 (15, 'Fur Friends Ltd.'),
 (16, 'Happy Tails Inc.'),
 (17, 'Pawfect Fitness Co.'),
-(18, 'Fur Friends Ltd.');
+(18, 'Fur Friends Ltd.'),
+(21, 'Pawfect Fitness Co.'),
+(22, 'Fur Friends Ltd.'),
+(23, 'Happy Tails Inc.'),
+(24, 'Pawfect Fitness Co.'),
+(25, 'Fur Friends Ltd.'),
+(26, 'Happy Tails Inc.'),
+(27, 'Pawfect Fitness Co.'),
+(28, 'Fur Friends Ltd.'),
+(29, 'Happy Tails Inc.'),
+(30, 'Pawfect Fitness Co.'),
+(31, 'Fur Friends Ltd.'),
+(32, 'Happy Tails Inc.'),
+(33, 'Pawfect Fitness Co.'),
+(34, 'Fur Friends Ltd.'),
+(35, 'Happy Tails Inc.'),
+(36, 'Pawfect Fitness Co.'),
+(37, 'Fur Friends Ltd.'),
+(38, 'Happy Tails Inc.'),
+(39, 'Pawfect Fitness Co.'),
+(40, 'Fur Friends Ltd.');
 
 -- Insert into company
 INSERT INTO company (name, address, city, state) VALUES
@@ -325,7 +385,27 @@ INSERT INTO dog (name, owner, vet, breed, birthday, exercise, e_contact, color, 
 ('Zoey', 37, 'Dr. Green', 'Cocker Spaniel', '2021-01-30', 1, 13, 'Golden', 4),
 ('Toby', 38, 'Dr. Blue', 'Dalmatian', '2019-09-25', 2, 14, 'White with Black Spots', 5),
 ('Lily', 39, 'Dr. Brown', 'Shih Tzu', '2020-11-11', 3, 15, 'White', 6),
-('Leo', 40, 'Dr. Violet', 'Doberman', '2018-08-09', 4, 16, 'Black', 3);
+('Leo', 40, 'Dr. Violet', 'Doberman', '2018-08-09', 4, 16, 'Black', 3),
+('Rex', 41, 'Dr. Green', 'German Shepherd', '2018-10-11', 1, 1, 'Black and Tan', 4),
+('Duke', 42, 'Dr. Blue', 'Labrador Retriever', '2017-07-14', 2, 2, 'Yellow', 5),
+('Lola', 43, 'Dr. Brown', 'Beagle', '2019-03-05', 3, 3, 'Tri-Color', 6),
+('Misty', 44, 'Dr. Violet', 'Golden Retriever', '2020-11-18', 4, 4, 'Golden', 3),
+('Rosie', 45, 'Dr. Indigo', 'Shih Tzu', '2021-02-25', 5, 5, 'White', 2),
+('Chase', 46, 'Dr. Orange', 'Poodle', '2022-08-16', 6, 6, 'Black', 1),
+('Coco', 47, 'Dr. Green', 'Siberian Husky', '2018-12-12', 1, 7, 'Gray', 4),
+('Milo', 48, 'Dr. Blue', 'French Bulldog', '2020-04-07', 2, 8, 'Brindle', 5),
+('Bella', 49, 'Dr. Brown', 'Cocker Spaniel', '2019-09-20', 3, 9, 'Golden', 6),
+('Jasper', 50, 'Dr. Violet', 'Border Collie', '2021-06-30', 4, 10, 'Black and White', 3),
+('Finn', 51, 'Dr. Indigo', 'Pit Bull', '2020-01-15', 5, 11, 'Blue', 2),
+('Layla', 52, 'Dr. Orange', 'Dalmatian', '2017-05-19', 6, 12, 'White with Black Spots', 1),
+('Max', 53, 'Dr. Green', 'Bulldog', '2021-09-10', 1, 13, 'White', 4),
+('Daisy', 54, 'Dr. Blue', 'Boxer', '2019-02-12', 2, 14, 'Brindle', 5),
+('Luna', 55, 'Dr. Brown', 'Doberman', '2018-11-30', 3, 15, 'Black', 6),
+('Oliver', 56, 'Dr. Violet', 'Pomeranian', '2020-06-15', 4, 16, 'Cream', 3),
+('Nala', 57, 'Dr. Indigo', 'Australian Shepherd', '2021-01-03', 5, 17, 'Blue Merle', 2),
+('Riley', 58, 'Dr. Orange', 'Weimaraner', '2019-07-21', 6, 18, 'Gray', 1),
+('Hazel', 59, 'Dr. Green', 'Akita', '2018-03-28', 1, 19, 'Red', 4),
+('Leo', 60, 'Dr. Blue', 'Chihuahua', '2020-10-13', 2, 20, 'Fawn', 5);
 
 -- Insert into reservation
 INSERT INTO reservation (confirm_num, kennel, dog, owner, start, end) VALUES
@@ -378,4 +458,24 @@ INSERT INTO reservation (confirm_num, kennel, dog, owner, start, end) VALUES
 (147, 'Happy Tails Inc.', 'Zoey', 37, '2024-01-20', '2024-01-27'),
 (148, 'Pawfect Fitness Co.', 'Toby', 38, '2024-02-25', '2024-03-03'),
 (149, 'Fur Friends Ltd.', 'Lily', 39, '2024-03-15', '2024-03-22'),
-(150, 'Happy Tails Inc.', 'Leo', 40, '2024-04-10', '2024-04-17');
+(150, 'Happy Tails Inc.', 'Leo', 40, '2024-04-10', '2024-04-17'),
+(151, 'Happy Tails Inc.', 'Rex', 41, '2024-02-15', '2024-02-22'),
+(152, 'Pawfect Fitness Co.', 'Duke', 42, '2024-03-05', '2024-03-12'),
+(153, 'Fur Friends Ltd.', 'Lola', 43, '2024-04-10', '2024-04-17'),
+(154, 'Happy Tails Inc.', 'Misty', 44, '2024-05-20', '2024-05-27'),
+(155, 'Pawfect Fitness Co.', 'Rosie', 45, '2024-06-01', '2024-06-08'),
+(156, 'Fur Friends Ltd.', 'Chase', 46, '2024-07-10', '2024-07-17'),
+(157, 'Happy Tails Inc.', 'Coco', 47, '2024-08-15', '2024-08-22'),
+(158, 'Pawfect Fitness Co.', 'Milo', 48, '2024-09-05', '2024-09-12'),
+(159, 'Fur Friends Ltd.', 'Bella', 49, '2024-10-01', '2024-10-08'),
+(160, 'Happy Tails Inc.', 'Jasper', 50, '2024-11-20', '2024-11-27'),
+(161, 'Pawfect Fitness Co.', 'Finn', 51, '2024-12-10', '2024-12-17'),
+(162, 'Fur Friends Ltd.', 'Layla', 52, '2024-01-15', '2024-01-22'),
+(163, 'Happy Tails Inc.', 'Max', 53, '2024-02-25', '2024-03-03'),
+(164, 'Pawfect Fitness Co.', 'Daisy', 54, '2024-03-15', '2024-03-22'),
+(165, 'Fur Friends Ltd.', 'Luna', 55, '2024-04-05', '2024-04-12'),
+(166, 'Happy Tails Inc.', 'Oliver', 56, '2024-05-10', '2024-05-17'),
+(167, 'Pawfect Fitness Co.', 'Nala', 57, '2024-06-20', '2024-06-27'),
+(168, 'Fur Friends Ltd.', 'Riley', 58, '2024-07-01', '2024-07-08'),
+(169, 'Happy Tails Inc.', 'Hazel', 59, '2024-08-15', '2024-08-22'),
+(170, 'Pawfect Fitness Co.', 'Leo', 60, '2024-09-25', '2024-10-02');
