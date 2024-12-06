@@ -58,8 +58,40 @@ public class hw4 {
           catch(Exception e) {
             e.printStackTrace();
           }
+    }
 
-        
+    private static void listMealPlans()
+    {
+        try {
+            String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+            Properties props = new Properties();
+            FileInputStream in = new FileInputStream("myconfig.properties");
+            props.load(in);
+            in.close();
+            System.out.println(props);
+            Connection cn = DriverManager.getConnection(url, props);
+      
+            Statement st = cn.createStatement();
+      
+            String q = "SELECT * FROM food";
+            ResultSet rs = st.executeQuery(q);
+            
+            while(rs.next()) {
+              int id = rs.getInt("id");
+              String breakfast = rs.getString("breakfast");
+              String lunch = rs.getString("lunch");
+              String dinner = rs.getString("dinner");
+              String print = "Meal Plan " + id + "-- Breakfast: " + breakfast + " | Lunch: " + lunch + " | Dinner: " + dinner;
+              System.out.println(print);
+            }
+      
+            rs.close();
+            st.close();
+            cn.close();
+          }
+          catch(Exception e) {
+            e.printStackTrace();
+          }
     }
 
     private static void addCountry()
@@ -321,8 +353,8 @@ public class hw4 {
             do{
             
             System.out.println("""
-                    1. List countries
-                    2. Add country
+                    1. List Old Dogs
+                    2. List Meal Plans
                     3. Add border
                     4. Find countries based on GDP and inflation
                     5. Update country's GDP and inflation
@@ -336,7 +368,7 @@ public class hw4 {
 
             switch (choice) {
                 case 1 -> listOldDogs();
-                case 2 -> addCountry();
+                case 2 -> listMealPlans();
                 case 3 -> addBorder();
                 case 4 -> findCountriesByGDPAndInflation();        
                 case 5 -> updateCountryGDPAndInflation();
