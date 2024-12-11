@@ -289,7 +289,7 @@ public class dogKennel {
       }
     }
 
-    private static void updateCountryGDPAndInflation()
+    private static void updateMealPlan()
     {
       try {
         String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
@@ -299,36 +299,47 @@ public class dogKennel {
         in.close();
         
         Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
         
-        System.out.print("Country code....................................:");
+        System.out.print("Dog name....................................:");
         Scanner reader = new Scanner(System.in);
-        String code = reader.nextLine();
+        String code1 = reader.nextLine();
+
+        System.out.print("Owner id....................................:");
+        int code2 = Integer.parseInt(reader.nextLine());
         
-        String q = "SELECT * FROM country WHERE country_code = ?";
+        String q = "SELECT * FROM dog WHERE name = ? AND owner = ?";
         PreparedStatement st = cn.prepareStatement(q);
-        st.setString(1, code);
+        st.setString(1, code1);
+        st.setInt(2, code2);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
           rs.close();
 
-          System.out.print("Country per capita gdp (USD)....................:");
-          int gdp = Integer.parseInt(reader.nextLine());
-          System.out.print("Country inflation (pct).........................:");
-          double inflation = Double.parseDouble(reader.nextLine());
+          System.out.print("New mean plan....................:");
+          int code3 = Integer.parseInt(reader.nextLine());
 
-          q = "UPDATE country SET gdp = ?, inflation = ? WHERE country_code = ?";
+          q = "UPDATE dog SET food = ? WHERE name = ? AND owner = ?";
           st = cn.prepareStatement(q);
-          st.setInt(1, gdp);
-          st.setDouble(2, inflation);
-          st.setString(3, code);
+          st.setInt(1, code3);
+          st.setString(2, code1);
+          st.setInt(3, code2);
           st.execute();
           
           st.close();
           cn.close();
+
+          System.out.println();
+          System.out.println("[ Updated "+ code1 + "'s Meal Plan ]");
+          System.out.println();
+          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          System.out.println();
         }
         else
         {
-        System.out.println("This country does not exist!");
+        System.out.println("This dog does not exist in our system!");
           rs.close();
           st.close();
           cn.close();
@@ -339,6 +350,67 @@ public class dogKennel {
         e.printStackTrace();
       }
     }
+
+
+    
+    private static void updateCustomerBalance()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        System.out.print("Customer id....................................:");
+        Scanner reader = new Scanner(System.in);
+        int code1 = Integer.parseInt(reader.nextLine());
+        
+        String q = "SELECT * FROM customer WHERE id = ?";
+        PreparedStatement st = cn.prepareStatement(q);
+        st.setInt(1, code1);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+          rs.close();
+
+          System.out.print("New account balance....................:");
+          int code2 = Integer.parseInt(reader.nextLine());
+
+          q = "UPDATE customer SET balance = ? WHERE id = ?";
+          st = cn.prepareStatement(q);
+          st.setInt(1, code2);
+          st.setInt(2, code1);
+          st.execute();
+          
+          st.close();
+          cn.close();
+
+          System.out.println();
+          System.out.println("[ Updated Customer "+ code1 + "'s Account Balance ]");
+          System.out.println();
+          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          System.out.println();
+        }
+        else
+        {
+        System.out.println("This customer does not exist in our system!");
+          rs.close();
+          st.close();
+          cn.close();
+          System.exit(1);
+        }
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+
 
     private static void removeDog()
     {
@@ -480,7 +552,9 @@ public class dogKennel {
                     4. Add New Dog
                     5. Remove Dog (RIP)
                     6. Remove Employee from Company
-                    7. Exit
+                    7. Update Dog's Meal Plan
+                    8. Update Customer Account Balance
+                    9. Exit
                     """);
 
             System.out.print("Enter your choice (1-7): ");
@@ -494,7 +568,9 @@ public class dogKennel {
                 case 4 -> addNewDog();
                 case 5 -> removeDog();
                 case 6 -> removeEmployeeFromCompany();
-                case 7 -> System.out.println("Exiting!");
+                case 7 -> updateMealPlan();
+                case 8 -> updateCustomerBalance();
+                case 9 -> System.out.println("Exiting!");
                     }
                 
                 } while (choice != 7);
