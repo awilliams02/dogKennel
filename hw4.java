@@ -14,11 +14,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.util.Properties;
 import java.util.Scanner;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
-import java.util.Date;
 
 public class hw4 {
 
@@ -44,11 +45,17 @@ public class hw4 {
       
             String q = "SELECT COUNT(*) AS count FROM dog WHERE birthday <= '2014-01-01'";
             ResultSet rs = st.executeQuery(q);
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             
             while(rs.next()) {
               int count = rs.getInt("count");
+              System.out.println();
               String print = "There are " + count + " old dogs in the system currently!";
               System.out.println(print);
+              System.out.println();
+              System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              System.out.println();
             }
       
             rs.close();
@@ -75,6 +82,9 @@ public class hw4 {
       
             String q = "SELECT * FROM food";
             ResultSet rs = st.executeQuery(q);
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println();
             
             while(rs.next()) {
               int id = rs.getInt("id");
@@ -83,8 +93,11 @@ public class hw4 {
               String dinner = rs.getString("dinner");
               String print = "Meal Plan " + id + "-- Breakfast: " + breakfast + " | Lunch: " + lunch + " | Dinner: " + dinner;
               System.out.println(print);
+              
             }
-      
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              System.out.println();
             rs.close();
             st.close();
             cn.close();
@@ -94,8 +107,19 @@ public class hw4 {
           }
     }
 
-    private static void addCountry()
+    private static void addNewDog()
     {
+      /*
+        name VARCHAR NOT NULL,
+        owner INT NOT NULL,
+        vet VARCHAR NOT NULL,
+        breed VARCHAR NOT NULL,
+        birthday DATE NOT NULL,
+        exercise INT NOT NULL,
+        e_contact INT NOT NULL,
+        color VARCHAR NOT NULL,
+        food INT NOT NULL,
+       */
         try {
             String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
             Properties props = new Properties();
@@ -104,74 +128,24 @@ public class hw4 {
             in.close();
             
             Connection cn = DriverManager.getConnection(url, props);
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println();
             
-            System.out.print("Country code....................................:");
-            Scanner reader = new Scanner(System.in);
-            String code = reader.nextLine();
-            
-            String q = "SELECT * FROM country WHERE country_code = ?";
-            PreparedStatement st = cn.prepareStatement(q);
-            st.setString(1, code);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-              System.out.println("This country code is already taken");
-              rs.close();
-              st.close();
-              cn.close();
-              System.exit(1);
-            }
-            rs.close();
-      
-            System.out.print("Country name....................................:");
-            String name = reader.nextLine();
-            System.out.print("Country per capita gdp (USD)....................:");
-            int gdp = Integer.parseInt(reader.nextLine());
-            System.out.print("Country inflation (pct).........................:");
-            double inflation = Double.parseDouble(reader.nextLine());
-
-            q = "INSERT INTO country VALUES (?,?,?,?)";
-            st = cn.prepareStatement(q);
-            st.setString(1, code);
-            st.setString(2, name);
-            st.setInt(3, gdp);
-            st.setDouble(4, inflation);
-            st.execute();
-            
-            st.close();
-            cn.close();
-          }
-          catch(Exception e) {
-            e.printStackTrace();
-          }
-    }
-
-    private static void addBorder()
-    {
-        try {
-            String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
-            Properties props = new Properties();
-            FileInputStream in = new FileInputStream("myconfig.properties");
-            props.load(in);
-            in.close();
-            
-            Connection cn = DriverManager.getConnection(url, props);
-            
-            System.out.print("Country code 1....................................:");
+            System.out.print("Dog's Name....................................:");
             Scanner reader = new Scanner(System.in);
             String code1 = reader.nextLine();
 
-            System.out.print("Country code 2....................................:");
-            String code2 = reader.nextLine();
+            System.out.print("Owner id....................................:");
+            int code2 = Integer.parseInt(reader.nextLine());
             
-            String q = "SELECT * FROM border WHERE (country_code_1 = ? AND country_code_2 = ?) OR (country_code_1 = ? AND country_code_2 = ?)";
+            String q = "SELECT * FROM dog WHERE name = ? AND owner = ?";
             PreparedStatement st = cn.prepareStatement(q);
             st.setString(1, code1);
-            st.setString(2, code2);
-            st.setString(3, code2);
-            st.setString(4, code1);
+            st.setInt(2, code2);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-              System.out.println("This border already exists!");
+              System.out.println("This dog is already in our system!");
               rs.close();
               st.close();
               cn.close();
@@ -179,18 +153,89 @@ public class hw4 {
             }
             rs.close();
       
-            System.out.print("Border length....................................:");
-            int length = Integer.parseInt(reader.nextLine());
+            System.out.print("Veterinarian name....................................:");
+            String code3 = reader.nextLine();
+            System.out.print("Dog's breed....................:");
+            String code4 = reader.nextLine();
+            System.out.print("Dog's birthday.........................:");
+            Date code5 = Date.valueOf(reader.nextLine());
+            System.out.print("Exercise Plan....................................:");
+            int code6 = Integer.parseInt(reader.nextLine());
+            System.out.print("Emergency Contact id....................................:");
+            int code7 = Integer.parseInt(reader.nextLine());
+            System.out.print("Dog's color....................:");
+            String code8 = reader.nextLine();
+            System.out.print("Meal plan....................................:");
+            int code9 = Integer.parseInt(reader.nextLine());
 
-            q = "INSERT INTO border VALUES (?,?,?)";
+            q = "INSERT INTO dog VALUES (?,?,?,?,?,?,?,?,?)";
             st = cn.prepareStatement(q);
             st.setString(1, code1);
-            st.setString(2, code2);
-            st.setInt(3, length);
+            st.setInt(2, code2);
+            st.setString(3, code3);
+            st.setString(4, code4);
+            st.setDate(5, code5);
+            st.setInt(6, code6);
+            st.setInt(7, code7);
+            st.setString(8, code8);
+            st.setInt(9, code9);
+
             st.execute();
             
             st.close();
             cn.close();
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println();
+          }
+          catch(Exception e) {
+            e.printStackTrace();
+          }
+    }
+
+    private static void addNewCustomer()
+    {
+    //id INT NOT NULL,
+    //name VARCHAR NOT NULL,
+    //balance int = 0 to start,
+    //card VARCHAR NOT NULL,
+        try {
+            String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+            Properties props = new Properties();
+            FileInputStream in = new FileInputStream("myconfig.properties");
+            props.load(in);
+            in.close();
+            
+            Connection cn = DriverManager.getConnection(url, props);
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println();
+            
+            System.out.print("id....................................:");
+            Scanner reader = new Scanner(System.in);
+            int code1 = Integer.parseInt(reader.nextLine());
+
+            System.out.print("name....................................:");
+            String code2 = reader.nextLine();
+
+            int code3 = 0;
+
+            System.out.print("card....................................:");
+            String code4 = reader.nextLine();
+
+            String q = "INSERT INTO customer VALUES (?,?,?,?)";
+            PreparedStatement st = cn.prepareStatement(q);
+            st.setInt(1, code1);
+            st.setString(2, code2);
+            st.setInt(3, code3);
+            st.setString(4, code4);
+            st.execute();
+            
+            st.close();
+            cn.close();
+            System.out.println();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println();
           }
           catch(Exception e) {
             e.printStackTrace();
@@ -355,8 +400,8 @@ public class hw4 {
             System.out.println("""
                     1. List Old Dogs
                     2. List Meal Plans
-                    3. Add border
-                    4. Find countries based on GDP and inflation
+                    3. Add New Customer
+                    4. Add New Dog
                     5. Update country's GDP and inflation
                     6. Remove border
                     7. Exit
@@ -365,12 +410,12 @@ public class hw4 {
             System.out.print("Enter your choice (1-7): ");
             choice = scanner.nextInt();
             scanner.nextLine();
-
+            
             switch (choice) {
                 case 1 -> listOldDogs();
                 case 2 -> listMealPlans();
-                case 3 -> addBorder();
-                case 4 -> findCountriesByGDPAndInflation();        
+                case 3 -> addNewCustomer();
+                case 4 -> addNewDog();
                 case 5 -> updateCountryGDPAndInflation();
                 case 6 -> removeBorder();
                 case 7 -> System.out.println("Exiting!");
