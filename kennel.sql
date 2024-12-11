@@ -8,16 +8,16 @@
  * 
  *======================================================================*/
 
-DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS reservation;
+DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS working;
 DROP TABLE IF EXISTS dog;
 DROP TABLE IF EXISTS food;
+DROP TABLE IF EXISTS veterinarian;
 DROP TABLE IF EXISTS exercise;
 DROP TABLE IF EXISTS employee;
-DROP TABLE IF EXISTS company;
-DROP TABLE IF EXISTS reservation;
-DROP TABLE IF EXISTS working;
-DROP TABLE IF EXISTS veterinarian;
 DROP TABLE IF EXISTS contact;
+DROP TABLE IF EXISTS customer;
 
 /*
 customer :
@@ -28,6 +28,68 @@ CREATE TABLE customer(
     name VARCHAR NOT NULL,
     balance int,
     card VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+
+/*
+contact :
+    this table holds important identification information for different emergency contacts
+*/
+CREATE TABLE contact(
+    id INT NOT NULL,
+    name VARCHAR NOT NULL,
+    phone VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+
+/*
+employee :
+    this table holds important identification information for different employees
+*/
+CREATE TABLE employee(
+    id INT NOT NULL,
+    first VARCHAR NOT NULL,
+    last VARCHAR NOT NULL,
+    start DATE NOT NULL,
+    card VARCHAR NOT NULL,
+    company VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+
+/*
+exercise :
+    this table holds important identification information for different exercise plans
+*/
+CREATE TABLE exercise(
+    id INT NOT NULL,
+    days INT NOT NULL,
+    cost INT NOT NULL,
+    time INT NOT NULL,
+    alone BOOLEAN NOT NULL,
+    employee INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee) REFERENCES employee(id)
+);
+
+/*
+veterinarian :
+    this table holds important identification information for different veterinarians
+*/
+CREATE TABLE veterinarian(
+    name VARCHAR NOT NULL,
+    phone VARCHAR NOT NULL,
+    PRIMARY KEY (name)
+);
+
+/*
+food :
+    this table holds important identification information for different food plans
+*/
+CREATE TABLE food(
+    id INT NOT NULL,
+    breakfast VARCHAR NOT NULL,
+    lunch VARCHAR NOT NULL,
+    dinner VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -51,47 +113,6 @@ CREATE TABLE dog(
     FOREIGN KEY (vet) REFERENCES veterinarian(name),
     FOREIGN KEY (exercise) REFERENCES exercise(id),
     FOREIGN KEY (food) REFERENCES food(id)
-);
-
-/*
-food :
-    this table holds important identification information for different food plans
-*/
-CREATE TABLE food(
-    id INT NOT NULL,
-    breakfast VARCHAR NOT NULL,
-    lunch VARCHAR NOT NULL,
-    dinner VARCHAR NOT NULL,
-    PRIMARY KEY (id)
-);
-
-/*
-exercise :
-    this table holds important identification information for different exercise plans
-*/
-CREATE TABLE exercise(
-    id INT NOT NULL,
-    days INT NOT NULL,
-    cost INT NOT NULL,
-    time INT NOT NULL,
-    alone BOOLEAN NOT NULL,
-    employee INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (employee) REFERENCES employee(id)
-);
-
-/*
-employee :
-    this table holds important identification information for different employees
-*/
-CREATE TABLE employee(
-    id INT NOT NULL,
-    first VARCHAR NOT NULL,
-    last VARCHAR NOT NULL
-    start DATE NOT NULL,
-    card VARCHAR NOT NULL,
-    company VARCHAR NOT NULL,
-    PRIMARY KEY (id),
 );
 
 /*
@@ -125,33 +146,11 @@ CREATE TABLE reservation(
     kennel VARCHAR NOT NULL,
     dog VARCHAR NOT NULL,
     owner INT NOT NULL,
-    start DATE NOT NULL,
-    end DATE NOT NULL,
-    PRIMARY KEY (confirm_num)
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    PRIMARY KEY (confirm_num),
     FOREIGN KEY (kennel) REFERENCES company(name),
-    FOREIGN KEY (owner) REFERENCES customer(id),
     FOREIGN KEY (dog, owner) REFERENCES dog(name, owner)
-);
-
-/*
-veterinarian :
-    this table holds important identification information for different veterinarians
-*/
-CREATE TABLE veterinarian(
-    name VARCHAR NOT NULL,
-    phone VARCHAR NOT NULL,
-    PRIMARY KEY (name)
-);
-
-/*
-contact :
-    this table holds important identification information for different emergency contacts
-*/
-CREATE TABLE contact(
-    id INT NOT NULL,
-    name VARCHAR NOT NULL,
-    phone VARCHAR NOT NULL,
-    PRIMARY KEY (id)
 );
 
 -- Insert into customer
@@ -230,7 +229,18 @@ INSERT INTO contact (id, name, phone) VALUES
 (6, 'Tony Stark', '555-6666'),
 (7, 'Bruce Wayne', '555-7777'),
 (8, 'Clark Kent', '555-8888'),
-(9, 'Diana Prince', '555-9999');
+(9, 'Diana Prince', '555-9999'),
+(10, 'Joe Prince', '555-8888'),
+(11, 'Mary Prince', '444-8888'),
+(12, 'Joe James', '333-8888'),
+(13, 'Mary James', '555-3333'),
+(14, 'Joe Williams', '111-8888'),
+(15, 'Jack Williams', '222-8888'),
+(16, 'Bob Prince', '555-2233'),
+(17, 'Sally James', '999-8888'),
+(18, 'Mary Maple', '112-8888'),
+(19, 'Prince Joe', '555-4433'),
+(20, 'Pope James', '555-1212');
 
 -- Insert into food
 INSERT INTO food (id, breakfast, lunch, dinner) VALUES
@@ -241,14 +251,7 @@ INSERT INTO food (id, breakfast, lunch, dinner) VALUES
 (5, 'Low-Cal Kibble', 'Vegetables', 'Venison'),
 (6, 'Grain-Free', 'Pork', 'Quail');
 
--- Insert into exercise
-INSERT INTO exercise (id, days, cost, time, alone, employee) VALUES
-(1, 5, 100, 30, TRUE, 1),
-(2, 3, 50, 60, FALSE, 2),
-(3, 7, 150, 45, TRUE, 3),
-(4, 2, 40, 20, TRUE, 4),
-(5, 6, 130, 55, FALSE, 5),
-(6, 4, 80, 35, FALSE, 6);
+
 
 -- Insert into employee
 INSERT INTO employee (id, first, last, start, card, company) VALUES
@@ -257,7 +260,7 @@ INSERT INTO employee (id, first, last, start, card, company) VALUES
 (3, 'Liam', 'Wilson', '2021-05-10', '3456-7890-1234-5678', 'Fur Friends Ltd.'),
 (4, 'Sophia', 'Taylor', '2023-07-25', '4567-8901-2345-6789', 'Happy Tails Inc.'),
 (5, 'Oliver', 'Brown', '2023-09-10', '5678-9012-3456-7890', 'Pawfect Fitness Co.'),
-(6, 'Ella', 'Moore', '2023-11-15', '6789-0123-4567-8901', 'Fur Friends Ltd.')
+(6, 'Ella', 'Moore', '2023-11-15', '6789-0123-4567-8901', 'Fur Friends Ltd.'),
 (7, 'Nathan', 'Harris', '2023-05-10', '7890-2345-6789-1234', 'Happy Tails Inc.'),
 (8, 'Emma', 'Clark', '2022-10-18', '8901-3456-7890-2345', 'Pawfect Fitness Co.'),
 (9, 'Lucas', 'Martinez', '2021-09-25', '9012-4567-8901-3456', 'Fur Friends Ltd.'),
@@ -291,15 +294,24 @@ INSERT INTO employee (id, first, last, start, card, company) VALUES
 (39, 'Mason', 'Turner', '2023-05-10', '4567-2345-5678-3456', 'Pawfect Fitness Co.'),
 (40, 'Harper', 'Anderson', '2019-02-11', '8901-5678-6789-1234', 'Fur Friends Ltd.');
 
+-- Insert into exercise
+INSERT INTO exercise (id, days, cost, time, alone, employee) VALUES
+(1, 5, 100, 30, TRUE, 1),
+(2, 3, 50, 60, FALSE, 2),
+(3, 7, 150, 45, TRUE, 3),
+(4, 2, 40, 20, TRUE, 4),
+(5, 6, 130, 55, FALSE, 5),
+(6, 4, 80, 35, FALSE, 6);
+
 -- Insert into working
 INSERT INTO working (employee, company) VALUES
 (1, 'Happy Tails Inc.'),
-(1, 'Pawfect Fitness Co.')
+(1, 'Pawfect Fitness Co.'),
 (2, 'Pawfect Fitness Co.'),
 (3, 'Fur Friends Ltd.'),
 (4, 'Happy Tails Inc.'),
 (5, 'Pawfect Fitness Co.'),
-(6, 'Fur Friends Ltd.')
+(6, 'Fur Friends Ltd.'),
 (7, 'Happy Tails Inc.'),
 (8, 'Pawfect Fitness Co.'),
 (9, 'Fur Friends Ltd.'),
@@ -346,7 +358,7 @@ INSERT INTO dog (name, owner, vet, breed, birthday, exercise, e_contact, color, 
 ('Bella', 3, 'Dr. Brown', 'Beagle', '2020-09-20', 3, 3, 'Brown', 3),
 ('Rocky', 4, 'Dr. Violet', 'Bulldog', '2021-11-25', 4, 4, 'White', 4),
 ('Daisy', 5, 'Dr. Indigo', 'Poodle', '2017-04-12', 5, 5, 'Cream', 5),
-('Charlie', 6, 'Dr. Orange', 'German Shepherd', '2016-08-18', 6, 6, 'Tan', 6)
+('Charlie', 6, 'Dr. Orange', 'German Shepherd', '2016-08-18', 6, 6, 'Tan', 6),
 ('Luna', 7, 'Dr. Green', 'Husky', '2018-02-15', 1, 2, 'Gray', 4),
 ('Bailey', 8, 'Dr. Blue', 'Boxer', '2019-03-25', 2, 3, 'Brindle', 2),
 ('Cooper', 9, 'Dr. Brown', 'Dachshund', '2020-05-05', 3, 1, 'Brown', 5),
@@ -408,13 +420,13 @@ INSERT INTO dog (name, owner, vet, breed, birthday, exercise, e_contact, color, 
 ('Leo', 60, 'Dr. Blue', 'Chihuahua', '2013-10-13', 2, 20, 'Fawn', 5);
 
 -- Insert into reservation
-INSERT INTO reservation (confirm_num, kennel, dog, owner, start, end) VALUES
+INSERT INTO reservation (confirm_num, kennel, dog, owner, start_date, end_date) VALUES
 (101, 'Happy Tails Inc.', 'Buddy', 1, '2024-01-01', '2024-01-10'),
 (102, 'Pawfect Fitness Co.', 'Max', 2, '2024-02-01', '2024-02-15'),
 (103, 'Fur Friends Ltd.', 'Bella', 3, '2024-03-01', '2024-03-07'),
 (104, 'Happy Tails Inc.', 'Rocky', 4, '2024-04-01', '2024-04-10'),
 (105, 'Pawfect Fitness Co.', 'Daisy', 5, '2024-05-01', '2024-05-15'),
-(106, 'Fur Friends Ltd.', 'Charlie', 6, '2024-06-01', '2024-06-07')
+(106, 'Fur Friends Ltd.', 'Charlie', 6, '2024-06-01', '2024-06-07'),
 (107, 'Happy Tails Inc.', 'Luna', 7, '2024-07-01', '2024-07-15'),
 (108, 'Pawfect Fitness Co.', 'Bailey', 8, '2024-08-01', '2024-08-10'),
 (109, 'Fur Friends Ltd.', 'Cooper', 9, '2024-09-05', '2024-09-20'),
