@@ -21,7 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
 
-public class hw4 {
+public class dogKennel {
 
     public static void main(String[] args) {
         
@@ -340,7 +340,7 @@ public class hw4 {
       }
     }
 
-    private static void removeBorder()
+    private static void removeDog()
     {
       try {
         String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
@@ -351,37 +351,47 @@ public class hw4 {
         
         Connection cn = DriverManager.getConnection(url, props);
         
-        System.out.print("Country code 1....................................:");
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        System.out.print("Dog name....................................:");
         Scanner reader = new Scanner(System.in);
         String code1 = reader.nextLine();
 
-        System.out.print("Country code 2....................................:");
-        String code2 = reader.nextLine();
+        System.out.print("Owner id....................................:");
+        int code2 = Integer.parseInt(reader.nextLine());
         
-        String q = "SELECT * FROM border WHERE (country_code_1 = ? AND country_code_2 = ?) OR (country_code_1 = ? AND country_code_2 = ?)";
+        String q = "SELECT * FROM dog WHERE name = ? AND owner = ?";
         PreparedStatement st1 = cn.prepareStatement(q);
         st1.setString(1, code1);
-        st1.setString(2, code2);
-        st1.setString(3, code2);
-        st1.setString(4, code1);
+        st1.setInt(2, code2);
         ResultSet rs = st1.executeQuery();
         if (rs.next()) {
           rs.close();
 
-          q = "DELETE FROM border WHERE (country_code_1 = ? AND country_code_2 = ?) OR (country_code_1 = ? AND country_code_2 = ?)";
+          q = "DELETE FROM dog WHERE name = ? AND owner = ?";
           PreparedStatement st = cn.prepareStatement(q);
           st.setString(1, code1);
-          st.setString(2, code2);
-          st.setString(3, code2);
-          st.setString(4, code1);
+          st.setInt(2, code2);
           st.execute();
           
           st.close();
           cn.close();
+          
+          System.out.println();
+          System.out.println("[ Removed "+ code1 + " ]");
+          System.out.println();
+          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          System.out.println();
         }
         else
         {
-        System.out.println("This border does not exist!");
+        System.out.println("This dog does not exist in our system!");
+        
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
           rs.close();
           st1.close();
           cn.close();
@@ -393,6 +403,72 @@ public class hw4 {
       }
     }
 
+    private static void removeEmployeeFromCompany()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        System.out.print("Employee id....................................:");
+        Scanner reader = new Scanner(System.in);
+        int code1 = Integer.parseInt(reader.nextLine());
+
+        System.out.print("Company name....................................:");
+        String code2 = reader.nextLine();
+        
+        String q = "SELECT * FROM working WHERE employee = ? AND company = ?";
+        PreparedStatement st1 = cn.prepareStatement(q);
+        st1.setInt(1, code1);
+        st1.setString(2, code2);
+        ResultSet rs = st1.executeQuery();
+        if (rs.next()) {
+          rs.close();
+
+          q = "DELETE FROM working WHERE employee = ? AND company = ?";
+          PreparedStatement st = cn.prepareStatement(q);
+          st.setInt(1, code1);
+          st.setString(2, code2);
+          st.execute();
+          
+          st.close();
+          cn.close();
+          
+          System.out.println();
+          System.out.println("[ Removed Employee "+ code1 + " ]");
+          System.out.println();
+          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          System.out.println();
+        }
+        else
+        {
+        System.out.println("This employee does not work at the given company!");
+        
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+          rs.close();
+          st1.close();
+          cn.close();
+          System.exit(1);
+        }
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+
+
+
     private static void mainMenu(Scanner scanner) {
         int choice;
             do{
@@ -402,8 +478,8 @@ public class hw4 {
                     2. List Meal Plans
                     3. Add New Customer
                     4. Add New Dog
-                    5. Update country's GDP and inflation
-                    6. Remove border
+                    5. Remove Dog (RIP)
+                    6. Remove Employee from Company
                     7. Exit
                     """);
 
@@ -416,8 +492,8 @@ public class hw4 {
                 case 2 -> listMealPlans();
                 case 3 -> addNewCustomer();
                 case 4 -> addNewDog();
-                case 5 -> updateCountryGDPAndInflation();
-                case 6 -> removeBorder();
+                case 5 -> removeDog();
+                case 6 -> removeEmployeeFromCompany();
                 case 7 -> System.out.println("Exiting!");
                     }
                 
