@@ -242,9 +242,17 @@ public class dogKennel {
           }
     }
 
-    
+            
     private static void findReservations()
     {
+      /*
+    confirm_num INT NOT NULL,
+    kennel VARCHAR NOT NULL,
+    dog VARCHAR NOT NULL,
+    owner INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+       */
       try {
         String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
         Properties props = new Properties();
@@ -253,42 +261,56 @@ public class dogKennel {
         in.close();
         
         Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
         
-        System.out.print("Minimum per capita gdp (USD)....................................:");
+        System.out.print("Date(YYYY-MM-DD)....................................:");
         Scanner reader = new Scanner(System.in);
-        int min_GDP = Integer.parseInt(reader.nextLine());
-        System.out.print("Maximum per capita gdp (USD)....................................:");
-        int max_gdp = Integer.parseInt(reader.nextLine());
-        System.out.print("Minimum inflation (pct)....................................:");
-        double min_inflation = Double.parseDouble(reader.nextLine());
-        System.out.print("Maximum inflation (pct)....................................:");
-        double max_inflation = Double.parseDouble(reader.nextLine());
+        Date code1 = Date.valueOf(reader.nextLine());
+        System.out.print("Company....................................:");
+        String code2 = reader.nextLine();
         
-        String q = "SELECT * FROM country WHERE (gdp BETWEEN ? AND ?) AND (inflation BETWEEN ? AND ?) ORDER BY gdp DESC, inflation ASC";
+        String q = "SELECT * FROM reservation WHERE start_date <= ? AND end_date >= ? AND kennel = ? ORDER BY start_date ASC, end_date ASC";
         PreparedStatement st = cn.prepareStatement(q);
-        st.setInt(1, min_GDP);
-        st.setInt(2, max_gdp);
-        st.setDouble(3, min_inflation);
-        st.setDouble(4, max_inflation);
+        st.setDate(1, code1);
+        st.setDate(2, code1);
+        st.setString(3, code2);
         ResultSet rs = st.executeQuery();
+        int x = 0;
+        System.out.println();
             
         while(rs.next()) {
-          int gdp = rs.getInt("gdp");
-          double inflation = rs.getDouble("inflation");
-          String name = rs.getString("country_name");
-          String code = rs.getString("country_code");
-          String print = name + " (" + code + "), per capita gdp $" + gdp + ", inflation rate " + inflation + "%";
+          int confirm_num = rs.getInt("confirm_num");
+          String kennel = rs.getString("kennel");
+          String dog = rs.getString("dog");
+          int owner = rs.getInt("owner");
+          Date start = rs.getDate("start_date");
+          Date end = rs.getDate("end_date");
+          String print = "| Dog: " + dog + " | Owner: " + owner + " | Confirmation #: " + confirm_num + " | Company: " + kennel + " | Start Date: " + start + " | End Date: " + end + " |";
           System.out.println(print);
+          System.out.println();
+          x++;
+        }
+
+        if(x == 0)
+        {
+          System.out.println();
+          System.out.println("Sorry, there are no reservations over this date for Company: " + code2 + "!");
         }
   
         rs.close();
         st.close();
         cn.close();
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
       }
       catch(Exception e) {
         e.printStackTrace();
       }
     }
+    
 
         
     private static void searchForDog()
