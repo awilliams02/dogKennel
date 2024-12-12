@@ -122,7 +122,9 @@ working :
 CREATE TABLE working(
     employee INT NOT NULL,
     company VARCHAR NOT NULL,
-    PRIMARY KEY (employee, company)
+    PRIMARY KEY (employee, company),
+    FOREIGN KEY (employee) REFERENCES employee(id),
+    FOREIGN KEY (company) REFERENCES company(name)
 );
 
 /*
