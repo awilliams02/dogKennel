@@ -93,9 +93,9 @@ public class dogKennel {
               String dinner = rs.getString("dinner");
               String print = "Meal Plan " + id + "-- Breakfast: " + breakfast + " | Lunch: " + lunch + " | Dinner: " + dinner;
               System.out.println(print);
+              System.out.println();
               
             }
-            System.out.println();
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
               System.out.println();
             rs.close();
@@ -693,6 +693,14 @@ public class dogKennel {
 
     private static void mainMenu(Scanner scanner) {
         int choice;
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        System.out.println("                  [   Welcome to the Dog Kennel Application   ]                  ");
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+
             do{
             
             System.out.println("""
@@ -710,7 +718,7 @@ public class dogKennel {
                     12. Exit
                     """);
 
-            System.out.print("Enter your choice (1-7): ");
+            System.out.print("Enter your choice (1-12): ");
             choice = scanner.nextInt();
             scanner.nextLine();
             
@@ -729,7 +737,7 @@ public class dogKennel {
                 case 12 -> System.out.println("Exiting!");
                     }
                 
-                } while (choice != 7);
+                } while (choice != 12);
     }
 
 }
