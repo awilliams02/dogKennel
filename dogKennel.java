@@ -290,8 +290,20 @@ public class dogKennel {
       }
     }
 
+        
     private static void searchForDog()
     {
+      /*
+    name VARCHAR NOT NULL, -
+    owner INT NOT NULL, -
+    vet VARCHAR NOT NULL,
+    breed VARCHAR NOT NULL, -
+    birthday DATE NOT NULL, -
+    exercise INT NOT NULL, -
+    e_contact INT NOT NULL,
+    color VARCHAR NOT NULL, -
+    food INT NOT NULL, -
+       */
       try {
         String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
         Properties props = new Properties();
@@ -300,42 +312,55 @@ public class dogKennel {
         in.close();
         
         Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
         
-        System.out.print("Minimum per capita gdp (USD)....................................:");
+        System.out.print("Dog name....................................:");
         Scanner reader = new Scanner(System.in);
-        int min_GDP = Integer.parseInt(reader.nextLine());
-        System.out.print("Maximum per capita gdp (USD)....................................:");
-        int max_gdp = Integer.parseInt(reader.nextLine());
-        System.out.print("Minimum inflation (pct)....................................:");
-        double min_inflation = Double.parseDouble(reader.nextLine());
-        System.out.print("Maximum inflation (pct)....................................:");
-        double max_inflation = Double.parseDouble(reader.nextLine());
+        String code1 = reader.nextLine();
         
-        String q = "SELECT * FROM country WHERE (gdp BETWEEN ? AND ?) AND (inflation BETWEEN ? AND ?) ORDER BY gdp DESC, inflation ASC";
+        String q = "SELECT * FROM dog WHERE name = ? ORDER BY color ASC, owner ASC, breed ASC, birthday ASC";
         PreparedStatement st = cn.prepareStatement(q);
-        st.setInt(1, min_GDP);
-        st.setInt(2, max_gdp);
-        st.setDouble(3, min_inflation);
-        st.setDouble(4, max_inflation);
+        st.setString(1, code1);
         ResultSet rs = st.executeQuery();
+        int x = 0;
+        System.out.println();
             
         while(rs.next()) {
-          int gdp = rs.getInt("gdp");
-          double inflation = rs.getDouble("inflation");
-          String name = rs.getString("country_name");
-          String code = rs.getString("country_code");
-          String print = name + " (" + code + "), per capita gdp $" + gdp + ", inflation rate " + inflation + "%";
+          int owner = rs.getInt("owner");
+          String name = rs.getString("name");
+          int exercise = rs.getInt("exercise");
+          String vet = rs.getString("vet");
+          String breed = rs.getString("breed");
+          Date birthday = rs.getDate("birthday");
+          int contact = rs.getInt("e_contact");
+          String color = rs.getString("color");
+          int food = rs.getInt("food");
+          String print = "| Name: " + name + " | Owner: " + owner + " | Color: " + color + " | Breed: " + breed + " | Birthday: " + birthday + " | Food: " + food + " | Exercise: " + exercise + " | Veterinarian: " + vet + " | Emercency Contact: " + contact + " |";
           System.out.println(print);
+          System.out.println();
+          x++;
+        }
+
+        if(x == 0)
+        {
+          System.out.println();
+          System.out.println("Sorry, there are no dogs with this name in our system! ");
         }
   
         rs.close();
         st.close();
         cn.close();
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
       }
       catch(Exception e) {
         e.printStackTrace();
       }
     }
+
 
 
     
