@@ -116,18 +116,6 @@ CREATE TABLE dog(
 );
 
 /*
-working :
-    this table holds important identification information for employees working for different companies
-*/
-CREATE TABLE working(
-    employee INT NOT NULL,
-    company VARCHAR NOT NULL,
-    PRIMARY KEY (employee, company),
-    FOREIGN KEY (employee) REFERENCES employee(id),
-    FOREIGN KEY (company) REFERENCES company(name)
-);
-
-/*
 company :
     this table holds important identification information for different companies
 */
@@ -139,6 +127,17 @@ CREATE TABLE company(
     PRIMARY KEY (name)
 );
 
+/*
+working :
+    this table holds important identification information for employees working for different companies
+*/
+CREATE TABLE working(
+    employee INT NOT NULL,
+    company VARCHAR NOT NULL,
+    PRIMARY KEY (employee, company),
+    FOREIGN KEY (employee) REFERENCES employee(id),
+    FOREIGN KEY (company) REFERENCES company(name)
+);
 /*
 reservation :
     this table holds important identification information for different reservations
