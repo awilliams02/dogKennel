@@ -242,7 +242,8 @@ public class dogKennel {
           }
     }
 
-    private static void findCountriesByGDPAndInflation()
+    
+    private static void findReservations()
     {
       try {
         String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
@@ -283,6 +284,108 @@ public class dogKennel {
         rs.close();
         st.close();
         cn.close();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    private static void searchForDog()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        
+        System.out.print("Minimum per capita gdp (USD)....................................:");
+        Scanner reader = new Scanner(System.in);
+        int min_GDP = Integer.parseInt(reader.nextLine());
+        System.out.print("Maximum per capita gdp (USD)....................................:");
+        int max_gdp = Integer.parseInt(reader.nextLine());
+        System.out.print("Minimum inflation (pct)....................................:");
+        double min_inflation = Double.parseDouble(reader.nextLine());
+        System.out.print("Maximum inflation (pct)....................................:");
+        double max_inflation = Double.parseDouble(reader.nextLine());
+        
+        String q = "SELECT * FROM country WHERE (gdp BETWEEN ? AND ?) AND (inflation BETWEEN ? AND ?) ORDER BY gdp DESC, inflation ASC";
+        PreparedStatement st = cn.prepareStatement(q);
+        st.setInt(1, min_GDP);
+        st.setInt(2, max_gdp);
+        st.setDouble(3, min_inflation);
+        st.setDouble(4, max_inflation);
+        ResultSet rs = st.executeQuery();
+            
+        while(rs.next()) {
+          int gdp = rs.getInt("gdp");
+          double inflation = rs.getDouble("inflation");
+          String name = rs.getString("country_name");
+          String code = rs.getString("country_code");
+          String print = name + " (" + code + "), per capita gdp $" + gdp + ", inflation rate " + inflation + "%";
+          System.out.println(print);
+        }
+  
+        rs.close();
+        st.close();
+        cn.close();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+
+    
+    private static void searchForCustomer()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        System.out.print("Customer name....................................:");
+        Scanner reader = new Scanner(System.in);
+        String code1 = reader.nextLine();
+        
+        String q = "SELECT * FROM customer WHERE name = ? ORDER BY id ASC";
+        PreparedStatement st = cn.prepareStatement(q);
+        st.setString(1, code1);
+        ResultSet rs = st.executeQuery();
+        int x = 0;
+        System.out.println();
+            
+        while(rs.next()) {
+          int id = rs.getInt("id");
+          String name = rs.getString("name");
+          int balance = rs.getInt("balance");
+          String card = rs.getString("card");
+          String print = "| Customer #" + id + " | Name: " + name + " | Account Balance = " + balance + " | Card Number: " + card + " |";
+          System.out.println(print);
+          x++;
+        }
+
+        if(x == 0)
+        {
+          System.out.println();
+          System.out.println("Sorry, there are no customers with this name in our system! ");
+        }
+  
+        rs.close();
+        st.close();
+        cn.close();
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
       }
       catch(Exception e) {
         e.printStackTrace();
@@ -546,15 +649,18 @@ public class dogKennel {
             do{
             
             System.out.println("""
-                    1. List Old Dogs
-                    2. List Meal Plans
-                    3. Add New Customer
-                    4. Add New Dog
-                    5. Remove Dog (RIP)
-                    6. Remove Employee from Company
-                    7. Update Dog's Meal Plan
-                    8. Update Customer Account Balance
-                    9. Exit
+                    1.  List Old Dogs
+                    2.  List Meal Plans
+                    3.  Add New Customer
+                    4.  Add New Dog
+                    5.  Remove Dog (RIP)
+                    6.  Remove Employee from Company
+                    7.  Update Dog's Meal Plan
+                    8.  Update Customer Account Balance
+                    9 . Search for Customer
+                    10. Search for Dog
+                    11. Find Reservations
+                    12. Exit
                     """);
 
             System.out.print("Enter your choice (1-7): ");
@@ -570,7 +676,10 @@ public class dogKennel {
                 case 6 -> removeEmployeeFromCompany();
                 case 7 -> updateMealPlan();
                 case 8 -> updateCustomerBalance();
-                case 9 -> System.out.println("Exiting!");
+                case 9 -> searchForCustomer();
+                case 10 -> searchForDog();
+                case 11 -> findReservations();
+                case 12 -> System.out.println("Exiting!");
                     }
                 
                 } while (choice != 7);
