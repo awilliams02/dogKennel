@@ -1,0 +1,4 @@
+Link to video:
+(I also emailed it to you!)
+
+https://gonzagau-my.sharepoint.com/:v:/g/personal/awilliams19_zagmail_gonzaga_edu/ERwArD24lrxDk_Dn-ct2MaUBOPQO-G3IJ9Qz4fXsetWxAw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=CfzNTf
