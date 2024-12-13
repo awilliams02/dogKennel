@@ -106,7 +106,7 @@ public class dogKennel {
             e.printStackTrace();
           }
     }
-    
+
     private static void addNewDog()
     {
       /*
@@ -804,7 +804,7 @@ public class dogKennel {
                     14. Exit
                     """);
 
-            System.out.print("Enter your choice (1-12): ");
+            System.out.print("Enter your choice (1-14): ");
             choice = scanner.nextInt();
             scanner.nextLine();
             
@@ -825,7 +825,7 @@ public class dogKennel {
                 case 14 -> System.out.println("Exiting!");
                     }
                 
-                } while (choice != 12);
+                } while (choice != 14);
     }
 
 }
