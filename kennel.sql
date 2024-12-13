@@ -9,7 +9,6 @@
  *======================================================================*/
 
 DROP TABLE IF EXISTS reservation;
-DROP TABLE IF EXISTS company;
 DROP TABLE IF EXISTS working;
 DROP TABLE IF EXISTS dog;
 DROP TABLE IF EXISTS food;
@@ -18,6 +17,7 @@ DROP TABLE IF EXISTS exercise;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS contact;
 DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS company;
 
 /*
 customer :
@@ -252,8 +252,6 @@ INSERT INTO food (id, breakfast, lunch, dinner) VALUES
 (5, 'Low-Cal Kibble', 'Vegetables', 'Venison'),
 (6, 'Grain-Free', 'Pork', 'Quail');
 
-
-
 -- Insert into employee
 INSERT INTO employee (id, first, last, start, card, company) VALUES
 (1, 'Jake', 'Miller', '2023-01-15', '1234-5678-9012-3456', 'Happy Tails Inc.'),
@@ -295,14 +293,11 @@ INSERT INTO employee (id, first, last, start, card, company) VALUES
 (39, 'Mason', 'Turner', '2023-05-10', '4567-2345-5678-3456', 'Pawfect Fitness Co.'),
 (40, 'Harper', 'Anderson', '2019-02-11', '8901-5678-6789-1234', 'Fur Friends Ltd.');
 
--- Insert into exercise
-INSERT INTO exercise (id, days, cost, time, alone, employee) VALUES
-(1, 5, 100, 30, TRUE, 1),
-(2, 3, 50, 60, FALSE, 2),
-(3, 7, 150, 45, TRUE, 3),
-(4, 2, 40, 20, TRUE, 4),
-(5, 6, 130, 55, FALSE, 5),
-(6, 4, 80, 35, FALSE, 6);
+-- Insert into company
+INSERT INTO company (name, address, city, state) VALUES
+('Happy Tails Inc.', '123 Dog St.', 'New York', 'NY'),
+('Pawfect Fitness Co.', '456 Bark Ave.', 'Los Angeles', 'CA'),
+('Fur Friends Ltd.', '789 Woof Rd.', 'Chicago', 'IL');
 
 -- Insert into working
 INSERT INTO working (employee, company) VALUES
@@ -346,11 +341,17 @@ INSERT INTO working (employee, company) VALUES
 (39, 'Pawfect Fitness Co.'),
 (40, 'Fur Friends Ltd.');
 
--- Insert into company
-INSERT INTO company (name, address, city, state) VALUES
-('Happy Tails Inc.', '123 Dog St.', 'New York', 'NY'),
-('Pawfect Fitness Co.', '456 Bark Ave.', 'Los Angeles', 'CA'),
-('Fur Friends Ltd.', '789 Woof Rd.', 'Chicago', 'IL');
+INSERT INTO exercise (id, days, cost, time, alone, employee) VALUES
+(1, 7, 100, 60, TRUE, 1),
+(2, 5, 80, 45, FALSE, 2),
+(3, 10, 150, 90, TRUE, 3),
+(4, 3, 50, 30, FALSE, 4),
+(5, 14, 200, 120, TRUE, 5),
+(6, 6, 70, 40, FALSE, 6),
+(7, 8, 120, 75, TRUE, 7),
+(8, 4, 60, 35, FALSE, 8),
+(9, 12, 180, 100, TRUE, 9),
+(10, 9, 140, 80, FALSE, 10);
 
 -- Insert into dog
 INSERT INTO dog (name, owner, vet, breed, birthday, exercise, e_contact, color, food) VALUES
