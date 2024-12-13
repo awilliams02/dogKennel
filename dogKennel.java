@@ -106,7 +106,7 @@ public class dogKennel {
             e.printStackTrace();
           }
     }
-
+    
     private static void addNewDog()
     {
       /*
@@ -242,7 +242,6 @@ public class dogKennel {
           }
     }
 
-            
     private static void findReservations()
     {
       /*
@@ -271,11 +270,10 @@ public class dogKennel {
         System.out.print("Company....................................:");
         String code2 = reader.nextLine();
         
-        String q = "SELECT * FROM reservation WHERE start_date <= ? AND end_date >= ? AND kennel = ? ORDER BY start_date ASC, end_date ASC";
+        String q = "SELECT * FROM reservation WHERE start_date = ? AND kennel = ? ORDER BY start_date ASC, end_date ASC";
         PreparedStatement st = cn.prepareStatement(q);
         st.setDate(1, code1);
-        st.setDate(2, code1);
-        st.setString(3, code2);
+        st.setString(2, code2);
         ResultSet rs = st.executeQuery();
         int x = 0;
         System.out.println();
@@ -310,9 +308,7 @@ public class dogKennel {
         e.printStackTrace();
       }
     }
-    
 
-        
     private static void searchForDog()
     {
       /*
@@ -383,9 +379,6 @@ public class dogKennel {
       }
     }
 
-
-
-    
     private static void searchForCustomer()
     {
       try {
@@ -425,6 +418,58 @@ public class dogKennel {
         {
           System.out.println();
           System.out.println("Sorry, there are no customers with this name in our system! ");
+        }
+  
+        rs.close();
+        st.close();
+        cn.close();
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    private static void findDogsWithCertainsNumReservations()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        System.out.print("Minimum number of reservations:....................................:");
+        Scanner reader = new Scanner(System.in);
+        int code1 = Integer.parseInt(reader.nextLine());
+        
+        String q = "SELECT dog, owner, COUNT(*) AS num FROM reservation GROUP BY dog, owner HAVING COUNT(*) >= ?";
+        PreparedStatement st = cn.prepareStatement(q);
+        st.setInt(1, code1);
+        ResultSet rs = st.executeQuery();
+        int x = 0;
+        System.out.println();
+            
+        while(rs.next()) {
+          String name = rs.getString("dog");
+          String owner = rs.getString("owner");
+          int num_reservations = rs.getInt("num");
+          String print = "Dog: " + name + " | Owner = " + owner + " | Number of Reservations: " + num_reservations + " |";
+          System.out.println(print);
+          x++;
+        }
+
+        if(x == 0)
+        {
+          System.out.println();
+          System.out.println("Sorry, there are no dogs with this many reservations in our system! ");
         }
   
         rs.close();
@@ -501,8 +546,6 @@ public class dogKennel {
       }
     }
 
-
-    
     private static void updateCustomerBalance()
     {
       try {
@@ -560,7 +603,51 @@ public class dogKennel {
       }
     }
 
+    private static void findNumReservationsStartingOnEachDate()
+    {
+      try {
+        String url = "jdbc:postgresql://cps-postgresql.gonzaga.edu/awilliams19_db";
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("myconfig.properties");
+        props.load(in);
+        in.close();
+        
+        Connection cn = DriverManager.getConnection(url, props);
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+        
+        String q = "SELECT start_date, COUNT(*) AS num FROM reservation GROUP BY start_date ORDER BY start_date";
+        PreparedStatement st = cn.prepareStatement(q);
+        ResultSet rs = st.executeQuery();
+        int x = 0;
+        System.out.println();
+            
+        while(rs.next()) {
+          Date date = rs.getDate("start_date");
+          int num_reservations = rs.getInt("num");
+          String print = "Start Date: " + date + " | Number of Reservations: " + num_reservations + " |";
+          System.out.println(print);
+          x++;
+        }
 
+        if(x == 0)
+        {
+          System.out.println();
+          System.out.println("Sorry, there are no reservations in our system! ");
+        }
+  
+        rs.close();
+        st.close();
+        cn.close();
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
 
     private static void removeDog()
     {
@@ -688,9 +775,6 @@ public class dogKennel {
       }
     }
 
-
-
-
     private static void mainMenu(Scanner scanner) {
         int choice;
         System.out.println();
@@ -715,7 +799,9 @@ public class dogKennel {
                     9 . Search for Customer
                     10. Search for Dog
                     11. Find Reservations
-                    12. Exit
+                    12. Find Dogs By Number of Reservations
+                    13. Find Number of Reservations for each Start Date
+                    14. Exit
                     """);
 
             System.out.print("Enter your choice (1-12): ");
@@ -734,7 +820,9 @@ public class dogKennel {
                 case 9 -> searchForCustomer();
                 case 10 -> searchForDog();
                 case 11 -> findReservations();
-                case 12 -> System.out.println("Exiting!");
+                case 12 -> findDogsWithCertainsNumReservations();
+                case 13 -> findNumReservationsStartingOnEachDate();
+                case 14 -> System.out.println("Exiting!");
                     }
                 
                 } while (choice != 12);

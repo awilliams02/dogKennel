@@ -341,6 +341,7 @@ INSERT INTO working (employee, company) VALUES
 (39, 'Pawfect Fitness Co.'),
 (40, 'Fur Friends Ltd.');
 
+-- Insert into exercise
 INSERT INTO exercise (id, days, cost, time, alone, employee) VALUES
 (1, 7, 100, 60, TRUE, 1),
 (2, 5, 80, 45, FALSE, 2),
